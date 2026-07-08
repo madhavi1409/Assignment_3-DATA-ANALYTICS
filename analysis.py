@@ -183,17 +183,35 @@ plt.savefig("Q7_Item_Fat_Content.png")
 plt.show()
 
 # Question-08 item visibility vs sales
+
+df["Item Fat Content"] = df["Item Fat Content"].replace({
+    "LF": "Low Fat",
+    "low fat": "Low Fat",
+    "Low fat": "Low Fat",
+    "reg": "Regular",
+    "regular": "Regular"
+})
+
+# Filter only Regular and Low Fat
+filtered_df = df[df["Item Fat Content"].isin(["Regular", "Low Fat"])]
+
 plt.figure(figsize=(8,5))
+
 sns.scatterplot(
-    data=df,
+    data=filtered_df,
     x="Item Visibility",
-    y="Sales"
+    y="Sales",
+    hue="Item Fat Content",         
+    s=70                         
 )
+
 plt.title("Item Visibility vs Sales")
 plt.xlabel("Item Visibility")
 plt.ylabel("Sales")
+plt.legend(title="Item Fat Content")
 plt.tight_layout()
-plt.savefig("Q8_Visibility_vs_Sales.png")
+
+plt.savefig("Q8_Visibility_vs_Sales.png", dpi=300)
 plt.show()
 
 # Question-09 highest rated item types
